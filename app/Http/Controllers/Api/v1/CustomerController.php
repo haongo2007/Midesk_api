@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Customer;
+use Carbon\Carbon;
+use Auth;
 
 class CustomerController extends Controller
 {
@@ -12,9 +15,11 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $req = $request->all();
+        $customer = Customer::getDefault($req);
+        return response()->json(['status' => true,'message' => 'Successfully','data' => $customer]);
     }
 
     /**
@@ -46,7 +51,11 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        //
+        $customer = Customer::ShowOne($id);
+        if (!$customer) {
+            return response()->json(['status' => false,'message' => 'This resource was not found','data' => null]);
+        }
+        return response()->json(['status' => true,'message' => 'Successfully','data' => $customer]);
     }
 
     /**
@@ -80,6 +89,17 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $customer = Customer::find($id);
+        if (!$customer) {
+            return response()->json(['status' => false,'message' => 'This resource was not found','data' => null]);
+        }
+        if ($customer->is_delete != null) {
+            return response()->json(['status' => false,'message' => 'This resource has been deleted']);
+        }
+        $customer->is_delete = Customer::DELETED; 
+        $customer->is_delete_date = Carbon::now(); 
+        $customer->is_delete_creby = auth::user()->id;
+        $customer->save();
+        return response()->json(['status' => true,'message' => 'Deleted Successfully']);
     }
 }

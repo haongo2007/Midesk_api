@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Contact;
+use Carbon\Carbon;
+use Auth;
 
 class ContactController extends Controller
 {
@@ -12,9 +15,11 @@ class ContactController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $req = $request->all();
+        $contact = Contact::getDefault($req);
+        return response()->json(['status' => true,'message' => 'Successfully','data' => $contact]);
     }
 
     /**
@@ -35,7 +40,7 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        echo "create";
     }
 
     /**
@@ -46,7 +51,11 @@ class ContactController extends Controller
      */
     public function show($id)
     {
-        //
+        $contact = Contact::ShowOne($id);
+        if (!$contact) {
+            return response()->json(['status' => false,'message' => 'This resource was not found','data' => null]);
+        }
+        return response()->json(['status' => true,'message' => 'Successfully','data' => $contact]);
     }
 
     /**
@@ -69,7 +78,7 @@ class ContactController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        echo "update";
     }
 
     /**
@@ -80,6 +89,17 @@ class ContactController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $contact = Contact::find($id);
+        if (!$contact) {
+            return response()->json(['status' => false,'message' => 'This resource was not found','data' => null]);
+        }
+        if ($contact->is_delete != null) {
+            return response()->json(['status' => false,'message' => 'This resource has been deleted']);
+        }
+        $contact->is_delete = Contact::DELETED; 
+        $contact->is_delete_date = Carbon::now(); 
+        $contact->is_delete_creby = auth::user()->id;
+        $contact->save();
+        return response()->json(['status' => true,'message' => 'Deleted Successfully']);
     }
 }

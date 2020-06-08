@@ -154,7 +154,7 @@ class TicketsController extends Controller
             return response()->json(['status' => false,'message' => 'This resource was not found']);
         }
         if (!$ticket->is_delete) {
-            $ticket->is_delete = 1; 
+            $ticket->is_delete = Tickets::DELETED; 
             $ticket->is_delete_date = Carbon::now(); 
             $ticket->is_delete_creby = auth::user()->id;
             $ticket->save();

@@ -30,7 +30,7 @@ class Tickets extends Model
     static function ShowOne($id)
     {
         return self::with('getTicketsDetail')
-        ->where('is_delete',Tickets::DELETE)
+        ->where('is_delete',self::DELETE)
         ->find($id);
     }
 }
