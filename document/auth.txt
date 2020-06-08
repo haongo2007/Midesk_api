@@ -1,0 +1,48 @@
+-------- LOGIN TO GET TOKEN --------
+POST {DOMAIN NAME}/api/auth/login
+	//Request
+	{
+		"email":"abc@gmail.com",
+		"password":"******"
+	}
+
+	//Response
+	{
+    	"access_token": " #### ",
+    	"token_type" : "bearer",
+    	'exprires_in' 3600 // 1 hours
+	}
+
+-------- GET INFO --------
+POST {DOMAIN NAME}/api/auth/me
+	//Response
+	{
+    	"id": number,
+	    "groupid": number,
+	    "user_type_id": number,
+	    "firstname": "string",
+	    "lastname": "string",
+	    "fullname": "string",
+	    "username": "number",
+	    "activation_code": "string",
+	    "level": "string",
+	    "phone": "number",
+	    "email": "string",
+	    "address": string,
+	}
+
+-------- LOGOUT --------
+POST {DOMAIN NAME}/api/auth/logout
+	//Response
+	{
+    	"message": string,
+	}
+
+-------- REFRESH TOKEN --------
+POST {DOMAIN NAME}/api/auth/refresh
+	//Response
+	{
+    	"access_token": " #### ",
+    	"token_type" : "bearer",
+    	'exprires_in' 3600 // 1 hours
+	}

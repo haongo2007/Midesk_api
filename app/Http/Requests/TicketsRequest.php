@@ -24,8 +24,24 @@ class TicketsRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:255|min:3',
-            'content' => 'required',
+            
         ];
+        switch($this->method())
+        {
+            case 'POST':
+            {
+                return [
+                    'title' => 'required|max:255|min:3',
+                    'content' => 'required'
+                ];
+            }
+            case 'PUT':
+            {
+                return [
+                    'title' => 'required|max:255|min:3',
+                ];
+            }
+            default:break;
+        }
     }
 }

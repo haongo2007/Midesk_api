@@ -25,6 +25,6 @@ Route::group([
 });
 Route::group(['middleware' => 'auth:api'], function () {
 
-    Route::apiResource('tickets', 'Api\v1\TicketsController');
+    Route::apiResource('tickets', 'Api\v1\TicketsController')->except('create','edit');
 
 });

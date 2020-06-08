@@ -1,0 +1,150 @@
+
+-------- GET LIST TICKET --------
+GET {DOMAIN NAME}/api/tickets?from=0&get=2&sort_by=groupid&sort_order=asc 
+	// REQUEST
+	(*) form => position want to get
+	(*) get => total want to take
+	(*) sort_by => colunm want to sort. Defaults is id
+	(*) sort_order => One of asc, desc. Defaults to asc
+
+	(*) DEFAULT GET 10 FROM 0 AND SORT BY ID ORDER ASC
+
+	// RESPONSE
+	Status: 200 OK
+	{
+		"status" : boolean,
+		"message": string,
+	  	"data": {
+	  		"current_page": 1,
+	  		"data": [
+			    {
+					"id": 35436,
+					"title": "Help I need somebody!",
+					"ticket_detail":{
+					  	"title": "Không sử dụng dc coupon",
+					    "content": "Phiếu mẫu tư vấn",
+					}
+			    },
+			    {
+			      	"id": 35436,
+					"title": "Help I need somebody!",
+					"ticket_detail":{
+					  	"title": "Không sử dụng dc coupon",
+					    "content": "Phiếu mẫu tư vấn",
+					}
+			    },
+	  		],
+	  		"first_page_url": url,
+	        "from": number,
+	        "last_page": number,
+	        "last_page_url": url,
+	        "next_page_url": url,
+	        "path": url,
+	        "per_page": number,
+	        "prev_page_url": null,
+	        "to": number,
+	        "total": number
+	  	}
+	}
+
+
+-------- GET A TICKET --------
+GET {DOMAIN NAME}/api/tickets/{id}  /// get a ticket
+	//REQUEST
+	(*) id => primary id tickets
+
+	//Response
+	Status: 200 OK
+	{
+		"status" : boolean,
+		"message": string,
+	  	"data":{
+				"id": 35436,
+				"title": "Help I need somebody!",
+				"ticket_info":{
+				  	"title": "Không sử dụng dc coupon",
+				    "content": "Phiếu mẫu tư vấn",
+				}
+		    }
+	}
+
+
+-------- CREATE TICKET --------
+POST {DOMAIN NAME}/api/tickets
+	//REQUEST
+    {
+    	"title": string,
+		"assign_agent": number,
+		"assign_team": number,
+		"requester": number,
+		"status": string,
+		"priority": number,
+		"content": string,
+		"category": array
+    }
+
+	//Response
+	{
+	    "status": boolean,
+	    "message": string,
+	    "data": {
+	        "title": string,
+	        "category": number,
+	        "assign_agent": number,
+	        "assign_team": number,
+	        "requester": number,
+	        "groupid": number,
+	        "createby": number,
+	        "channel": string,
+	        "requester_type": string,
+	        "status": string,
+	        "priority": number,
+	        "datecreate": timestamp,
+	        "updated_at": "2020-06-08T04:54:27.000000Z",
+	        "created_at": "2020-06-08T04:54:27.000000Z",
+	        "id": number,
+	        "ticket_detail": {
+	            "ticket_id": number,
+	            "title": string,
+	            "content": string,
+	            "groupid": number,
+	            "id": number
+	        }
+	    }
+	}
+
+
+
+-------- UPDATE TICKET --------
+PUT {DOMAIN NAME}/api/tickets/{id}
+	//REQUEST
+    {
+    	"title": string,
+		"assign_agent": number,
+		"assign_team": number,
+		"requester": number,
+		"status": string,
+		"priority": number,
+		"content": string,
+		"category": array
+    }
+
+	//RESPONSE
+	Status: 200 OK
+    {
+	    "status": boolean,
+	    "message": string
+	}
+
+
+-------- DELETE TICKET --------
+DELETE {DOMAIN NAME}/api/tickets/{id}
+	// REQUEST 
+	(*) id // id ticket
+
+	//RESPONSE
+    Status: 200 OK
+    {
+	    "status": boolean,
+	    "message": string
+	}
