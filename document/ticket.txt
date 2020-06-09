@@ -1,0 +1,129 @@
+
+-------- GET LIST TICKET --------
+GET {DOMAIN NAME}/tickets?take=5&sort_by=groupid&sort_order=asc 
+	// REQUEST
+	(*) take => get how many for perpage
+	(*) sort_by => colunm want to sort. Defaults is id
+	(*) sort_order => One of asc, desc. Defaults to asc
+
+	(*) DEFAULT GET 10 FROM 0 AND SORT BY ID ORDER ASC
+
+	// RESPONSE
+	Status: 200 OK
+	{
+		"status" : boolean,
+		"message": string,
+	  	"data": [
+		    {
+				"id": 35436,
+				"title": "Help I need somebody!",
+				"ticket_detail":{
+				  	"title": "Không sử dụng dc coupon",
+				    "content": "Phiếu mẫu tư vấn",
+				}
+		    },
+		    {
+		      	"id": 35436,
+				"title": "Help I need somebody!",
+				"ticket_detail":{
+				  	"title": "Không sử dụng dc coupon",
+				    "content": "Phiếu mẫu tư vấn",
+				}
+		    },
+	  	]
+	}
+
+
+-------- GET A TICKET --------
+GET {DOMAIN NAME}/tickets/{id}  /// get a ticket
+	//REQUEST
+	(*) id => primary id tickets
+
+	//Response
+	Status: 200 OK
+	{
+		"status" : boolean,
+		"message": string,
+	  	"data": [
+	    	{
+				"id":      35436,
+				"title": "Help I need somebody!",
+				"ticket_info":{
+				  	"title": "Không sử dụng dc coupon",
+				    "content": "Phiếu mẫu tư vấn",
+				}
+		    }
+	  	]
+	}
+
+
+-------- CREATE TICKET --------
+POST {DOMAIN NAME}/tickets
+	//REQUEST
+    {
+		"title": "Không sử dụng dc coupon",
+		"assign_agent": 164,
+		"assign_team": 0,
+		"requester": 2235,
+		"status": "new",
+		"priority": 3,
+		"content":"Phiếu mẫu tư vấn",
+		"category": {
+			"0":11,
+			"1":22,
+			"2":33,
+			"3":44
+		}
+	}
+
+	//Response
+	Status: 200 OK
+    {
+		"status" : boolean,
+		"message": string,
+	    "data": {
+	        "ticket": 64215,
+	        "ticket_detail": 145088
+	    }
+	}
+
+
+
+-------- UPDATE TICKET --------
+PUT {DOMAIN NAME}/tickets
+	//REQUEST
+    {
+    	"id" : 1 // id ticket
+		"title": "Không sử dụng dc coupon",
+		"assign_agent": 164,
+		"assign_team": 0,
+		"requester": 2235,
+		"status": "new",
+		"priority": 3,
+		"content":"Phiếu mẫu tư vấn",
+		"category": {
+			"0":11,
+			"1":22,
+			"2":33,
+			"3":44
+		}
+	}
+
+	//RESPONSE
+	Status: 200 OK
+    {
+      "status": boolean,
+      "message": string,
+    },
+
+
+-------- DELETE TICKET --------
+DELETE {DOMAIN NAME}/tickets/{id}
+	// REQUEST 
+	(*) id // id ticket
+
+	//RESPONSE
+    Status: 200 OK
+    {
+	    "status": boolean,"message": "deleted successfully",
+	}

@@ -8,6 +8,7 @@ class Customer extends Model
 {
     public $timestamps = false;
     protected $table = 'customer';
+    protected $fillable = ['groupid','firstname','lastname','fullname','phone','email','address','province','createby','datecreate','channel'];
 
     const DELETED = 1;
     const DELETE = 0;

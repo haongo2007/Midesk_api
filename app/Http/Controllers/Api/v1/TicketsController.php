@@ -69,9 +69,11 @@ class TicketsController extends Controller
             $ticket_detail['groupid']   = $tk->groupid;
             $tkd = TicketDetail::create($ticket_detail);
             $tk['ticket_detail'] = $tkd;
+            
         DB::commit();
         } catch (\Exception $ex) {
-            DB::rollback();
+
+        DB::rollback();
             return response()->json(['status' => false,'message' => $ex->getMessage()], 500);
         }
         return response()->json(['status' => true,'message' => 'Successfully','data' => $tk]);
@@ -110,8 +112,9 @@ class TicketsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Tickets $ticket, TicketsRequest $request)
+    public function update($id, TicketsRequest $request)
     {
+        $ticket = Tickets::find($id);
         if (!$ticket || $ticket->is_delete == 1) {
             return response()->json(['status' => false,'message' => 'This resource was not found']);
         }

@@ -8,6 +8,7 @@ class Contact extends Model
 {
     public $timestamps = false;
     protected $table = 'contact';
+    protected $fillable = ['groupid','firstname','lastname','fullname','gender','phone','email','address','province','creby','datecreate','channel'];
 
     const DELETED = 1;
     const DELETE = null;

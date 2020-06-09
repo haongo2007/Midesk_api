@@ -1,0 +1,104 @@
+
+-------- GET LIST CONTACT --------
+GET {DOMAIN NAME}/contact?take=5&sort_by=groupid&sort_order=asc 
+	// REQUEST
+	(*) take => get how many for perpage
+	(*) sort_by => colunm want to sort. Defaults is id
+	(*) sort_order => One of asc, desc. Defaults to asc
+
+	(*) DEFAULT GET 10 FROM 0 AND SORT BY ID ORDER ASC
+
+	// RESPONSE
+	Status: 200 OK
+	{
+		"status" : boolean,
+		"message": string,
+	  	"data": [
+		    {
+				"id": 35436,
+				"title": "Help I need somebody!",
+		    },
+		    {
+		      	"id": 35436,
+				"title": "Help I need somebody!",
+		    },
+	  	]
+	}
+
+
+-------- GET A CONTACT --------
+GET {DOMAIN NAME}/contact/{id}  /// get a CONTACT
+	//REQUEST
+	(*) id => primary id contact
+
+	//Response
+	Status: 200 OK
+	{
+		"status" : boolean,
+		"message": string,
+	  	"data": [
+	    	{
+				"id":      35436,
+				"title": "Help I need somebody!",
+		    }
+	  	]
+	}
+
+
+-------- CREATE CONTACT --------
+POST {DOMAIN NAME}/contact
+	//REQUEST
+    {
+		"title": "Không sử dụng dc coupon",
+		"assign_agent": 164,
+		"assign_team": 0,
+		"requester": 2235,
+		"status": "new",
+		"priority": 3,
+	}
+
+	//Response
+	Status: 200 OK
+    {
+		"status" : boolean,
+		"message": string,
+	    "data": {
+	        "CONTACT": 64215,
+	        "CONTACT_detail": 145088
+	    }
+	}
+
+
+
+-------- UPDATE CONTACT --------
+PUT {DOMAIN NAME}/contact
+	//REQUEST
+    {
+    	"id" : 1 // id CONTACT
+		"title": "Không sử dụng dc coupon",
+		"assign_agent": 164,
+		"assign_team": 0,
+		"requester": 2235,
+		"status": "new",
+		"priority": 3,
+		"content":"Phiếu mẫu tư vấn",
+	}
+
+	//RESPONSE
+	Status: 200 OK
+    {
+      "status": boolean,
+      "message": string,
+    },
+
+
+-------- DELETE CONTACT --------
+DELETE {DOMAIN NAME}/contact/{id}
+	// REQUEST 
+	(*) id // id CONTACT
+
+	//RESPONSE
+    Status: 200 OK
+    {
+	    "status": boolean,"message": "deleted successfully",
+	}
